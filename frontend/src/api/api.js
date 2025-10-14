@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL + "/api";
+const API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/api"
+    : "https://coffee-manager-6ghx.onrender.com/api";
 
-export const loginUser = async (username, password) => {
-  return axios.post(`${API_URL}/auth/login`, { username, password });
-};
+export const loginUser = (username, password) =>
+  axios.post(`${API_URL}/auth/login`, { username, password });
 
 // Productos
 export const getProductos = () => axios.get(`${API_URL}/productos/`);

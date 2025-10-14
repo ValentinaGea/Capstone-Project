@@ -13,7 +13,10 @@ app = Flask(__name__)
 
 # ================= CORS =================
 # Permitir acceso a todos los orígenes
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, origins=[
+    "http://localhost:3000", 
+    "https://capstone-project-gules-chi.vercel.app/login",
+    "https://coffee-manager-6ghx.onrender.com"])
 
 # ================= REGISTRO DE BLUEPRINTS =================
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
