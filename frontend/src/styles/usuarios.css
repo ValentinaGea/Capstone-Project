@@ -1,0 +1,38 @@
+/* src/styles/usuarios.css */
+.usuario-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.usuario-form input,
+.usuario-form select {
+  padding: 6px;
+}
+
+.usuario-form button {
+  padding: 6px 12px;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.usuario-form button:hover {
+  background: #27ae60;
+}
+
+.usuarios-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.usuarios-table th {
+  background: #f4f4f4;
+}

@@ -1,0 +1,91 @@
+/* src/styles/tables.css */
+
+/* wrapper */
+.table-responsive {
+  width: 100%;
+  overflow-x: hidden; /* No desplazamiento lateral de la página */
+}
+
+/* tabla base (desktop) */
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.responsive-table th,
+.responsive-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.responsive-table th {
+  background: #f7f7f7;
+  font-weight: 700;
+}
+
+/* estilos para la lista de detalles (en pedidos) */
+.detalle-list {
+  padding-left: 14px;
+  margin: 0;
+}
+
+/* ----- MÓVIL: convertir filas en cards con label/valor ----- */
+@media (max-width: 768px) {
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  .responsive-table td {
+    display: grid;
+    grid-template-columns: 40% 60%; /* label a la izquierda, valor a la derecha */
+    gap: 8px;
+    padding: 6px 0;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* label (izquierda) usando pseudo-element con data-label */
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #333;
+    padding-right: 8px;
+    align-self: start;
+  }
+
+  /* permitir que listas internas se vean bien */
+  .responsive-table td .detalle-list {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .responsive-table td .detalle-list li {
+    padding: 2px 0;
+  }
+
+  /* botones: que ocupen 100% del ancho del valor para facilidad táctil */
+  .responsive-table td button {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  .responsive-table td select {
+    width: 100%;
+  }
+}

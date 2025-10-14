@@ -1,0 +1,81 @@
+/* src/styles/login.css */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Fondo solo en la página de login */
+.login-background {
+  background-image: url("../image/cafe-ecologico.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login_card {
+  background-color: rgba(206, 201, 201, 0.85);
+  padding: 40px;
+  margin-left: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+}
+
+.login_card h1 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #3e2c1c; /* marrón café */
+}
+
+.login_card form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login_card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.login_card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #6f4e37; /* marrón café oscuro */
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login_card button:hover {
+  background-color: #5a3d2b;
+}
+
+@media (max-width: 768px) {
+  .login_card {
+    margin: 0;
+  }
+}

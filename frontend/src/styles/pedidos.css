@@ -1,0 +1,31 @@
+/* src/styles/pedidos.css */
+.pedidos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pedidos-table th,
+.pedidos-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  vertical-align: top;
+  text-align: left;
+}
+
+.pedidos-table th {
+  background-color: #f2f2f2;
+}
+
+select,
+input {
+  padding: 5px;
+  margin: 3px;
+}
+
+.pedido-form {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: #fafafa;
+}
