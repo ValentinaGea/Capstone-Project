@@ -7,13 +7,10 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 # ================= LOGIN =================
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    """Login sencillo: admin/admin123 o usuarios desde la DB"""
     data = request.get_json()
-    print("Datos recibidos en login:", data)
     username = data.get("username")
     password = data.get("password")
 
-    # Caso especial: admin fijo
     if username == "admin" and password == "admin123":
         return jsonify({
             "success": True,
@@ -33,8 +30,8 @@ def login():
 
         if user:
             return jsonify({"success": True, "user": user})
-        else:
-            return jsonify({"success": False, "message": "Credenciales inválidas"}), 401
+        return jsonify({"success": False, "message": "Credenciales inválidas"}), 401
+
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
@@ -42,7 +39,6 @@ def login():
 # ================= CREAR USUARIO =================
 @auth_bp.route("/usuarios", methods=["POST"])
 def crear_usuario():
-    """Crear un nuevo usuario (solo admin puede crear)"""
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
@@ -51,8 +47,6 @@ def crear_usuario():
     if not username or not password:
         return jsonify({"success": False, "message": "Faltan datos"}), 400
 
-    # Para simplificar, asumimos que el frontend envía un token o usuario admin
-    # Aquí solo revisaremos username = "admin" como permiso para crear
     if data.get("requester") != "admin":
         return jsonify({"success": False, "message": "No tienes permiso"}), 403
 
@@ -74,7 +68,6 @@ def crear_usuario():
 # ================= LISTAR USUARIOS =================
 @auth_bp.route("/usuarios", methods=["GET"])
 def listar_usuarios():
-    """Listar todos los usuarios"""
     try:
         conn = get_db_connection()
         cur = conn.cursor(dictionary=True)
@@ -90,7 +83,6 @@ def listar_usuarios():
 # ================= ELIMINAR USUARIO =================
 @auth_bp.route("/usuarios/<int:user_id>", methods=["DELETE"])
 def eliminar_usuario(user_id):
-    """Eliminar un usuario (solo admin puede eliminar)"""
     requester = request.args.get("requester", "")
     if requester != "admin":
         return jsonify({"success": False, "message": "No tienes permiso"}), 403
