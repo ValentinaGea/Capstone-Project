@@ -3,8 +3,9 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000/api"
-    : "https://coffee-manager-6ghx.onrender.com/api";
+    : "https://coffee-manager-6ghx.onrender.com";
 
+// Auth
 export const loginUser = (username, password) =>
   axios.post(`${API_URL}/auth/login`, { username, password });
 
