@@ -9,6 +9,9 @@ from routes.productos import productos_bp
 from routes.pedidos import pedidos_bp
 from routes.estadisticas import estadisticas_bp
 
+
+app = Flask(__name__)
+
 @app.route("/api/debug/env")
 def debug_env():
     import os
@@ -22,7 +25,6 @@ def debug_env():
         "DEBUG": os.environ.get("DEBUG")
     })
 
-app = Flask(__name__)
 
 # ================= CORS =================
 # Permitir acceso a todos los orígenes
