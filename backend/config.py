@@ -1,11 +1,22 @@
 import os
+from urllib.parse import urlparse
+import psycopg2
+from dotenv import load_dotenv
 
-DB_CONFIG = {
-    "host": os.environ.get("DB_HOST", "localhost"),
-    "database": os.environ.get("DB_NAME", "coffeemanager_db"),
-    "user": os.environ.get("DB_USER", "cmuser"),
-    "password": os.environ.get("DB_PASSWORD", "123456"),
-    "port": int(os.environ.get("DB_PORT", 5432))
-}
+# Carga variables de .env
+load_dotenv()
 
-DEBUG = os.environ.get("FLASK_ENV", "production") != "production"
+DB_URL = os.environ.get("DATABASE_URL")
+if not DB_URL:
+    raise ValueError("❌ DATABASE_URL no encontrada. Revisa tu .env")
+
+def get_db_connection():
+    url = urlparse(DB_URL)
+    conn = psycopg2.connect(
+        dbname=url.path[1:],  # Quita la barra inicial
+        user=url.username,
+        password=url.password,
+        host=url.hostname,
+        port=url.port
+    )
+    return conn
