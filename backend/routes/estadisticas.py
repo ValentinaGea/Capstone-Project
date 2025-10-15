@@ -1,6 +1,7 @@
 # backend/routes/estadisticas.py
 from flask import Blueprint, jsonify
 from db import get_db_connection
+import psycopg2.extras
 
 estadisticas_bp = Blueprint("estadisticas", __name__, url_prefix="/api/estadisticas")
 
@@ -9,14 +10,14 @@ estadisticas_bp = Blueprint("estadisticas", __name__, url_prefix="/api/estadisti
 def get_ventas_diarias():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("""
             SELECT
-                DATE(fecha_creacion) as fecha,
-                COUNT(*) as num_pedidos,
-                SUM(total) as total_ventas
+                DATE(fecha_creacion) AS fecha,
+                COUNT(*) AS num_pedidos,
+                SUM(total) AS total_ventas
             FROM pedidos
-            WHERE fecha_creacion >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            WHERE fecha_creacion >= CURRENT_DATE - INTERVAL '7 days'
               AND estado = 'Completado'
             GROUP BY DATE(fecha_creacion)
             ORDER BY fecha
@@ -33,13 +34,13 @@ def get_ventas_diarias():
 def get_productos_populares():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("""
             SELECT 
                 pr.nombre,
                 pr.categoria,
-                SUM(pd.cantidad) as total_vendido,
-                SUM(pd.subtotal) as ingresos_generados
+                SUM(pd.cantidad) AS total_vendido,
+                SUM(pd.subtotal) AS ingresos_generados
             FROM productos pr
             JOIN pedido_detalles pd ON pr.id = pd.producto_id
             JOIN pedidos p ON pd.pedido_id = p.id
@@ -60,12 +61,12 @@ def get_productos_populares():
 def get_ventas_categoria():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("""
             SELECT 
                 pr.categoria,
-                COUNT(pd.id) as productos_vendidos,
-                SUM(pd.subtotal) as total_ingresos
+                COUNT(pd.id) AS productos_vendidos,
+                SUM(pd.subtotal) AS total_ingresos
             FROM productos pr
             JOIN pedido_detalles pd ON pr.id = pd.producto_id
             JOIN pedidos p ON pd.pedido_id = p.id
@@ -85,14 +86,14 @@ def get_ventas_categoria():
 def get_dashboard():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("""
             SELECT 
-                (SELECT COUNT(*) FROM productos) as total_productos,
-                (SELECT COUNT(*) FROM pedidos) as total_pedidos,
-                (SELECT COUNT(*) FROM pedidos WHERE estado = 'Pendiente') as pedidos_pendientes,
-                (SELECT COALESCE(SUM(total), 0) FROM pedidos WHERE estado = 'Completado') as ventas_totales,
-                (SELECT COALESCE(SUM(total), 0) FROM pedidos WHERE DATE(fecha_creacion) = CURDATE() AND estado = 'Completado') as ventas_hoy
+                (SELECT COUNT(*) FROM productos) AS total_productos,
+                (SELECT COUNT(*) FROM pedidos) AS total_pedidos,
+                (SELECT COUNT(*) FROM pedidos WHERE estado = 'Pendiente') AS pedidos_pendientes,
+                (SELECT COALESCE(SUM(total), 0) FROM pedidos WHERE estado = 'Completado') AS ventas_totales,
+                (SELECT COALESCE(SUM(total), 0) FROM pedidos WHERE fecha_creacion::date = CURRENT_DATE AND estado = 'Completado') AS ventas_hoy
         """)
         resumen = cur.fetchone()
         cur.close()

@@ -1,6 +1,7 @@
 # backend/routes/auth.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
+import psycopg2.extras  # necesario para RealDictCursor
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
@@ -19,7 +20,7 @@ def login():
 
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(
             "SELECT id, username, rol FROM usuarios WHERE username=%s AND password=%s",
             (username, password)
@@ -70,7 +71,7 @@ def crear_usuario():
 def listar_usuarios():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("SELECT id, username, rol, fecha_creacion FROM usuarios ORDER BY id ASC")
         usuarios = cur.fetchall()
         cur.close()

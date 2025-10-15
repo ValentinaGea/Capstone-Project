@@ -1,6 +1,7 @@
 # backend/routes/pedidos.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
+import psycopg2.extras
 
 pedidos_bp = Blueprint("pedidos", __name__, url_prefix="/api/pedidos")
 
@@ -10,14 +11,14 @@ def get_pedidos():
     """Obtener todos los pedidos con sus detalles"""
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
         cur.execute("SELECT * FROM pedidos ORDER BY fecha_creacion DESC")
         pedidos = cur.fetchall()
 
         for pedido in pedidos:
             cur.execute("""
-                SELECT pd.*, p.nombre as producto_nombre
+                SELECT pd.*, p.nombre AS producto_nombre
                 FROM pedido_detalles pd
                 JOIN productos p ON pd.producto_id = p.id
                 WHERE pd.pedido_id = %s
@@ -43,14 +44,14 @@ def crear_pedido():
             return jsonify({"success": False, "message": "Debe incluir al menos un producto"}), 400
 
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-        # Crear el pedido
+        # Crear el pedido y obtener el ID usando RETURNING
         cur.execute(
-            "INSERT INTO pedidos (cliente_nombre, estado, total) VALUES (%s, %s, %s)",
+            "INSERT INTO pedidos (cliente_nombre, estado, total) VALUES (%s, %s, %s) RETURNING id",
             (data.get("cliente_nombre", "Cliente"), data.get("estado", "Pendiente"), 0)
         )
-        pedido_id = cur.lastrowid
+        pedido_id = cur.fetchone()["id"]
 
         total_pedido = 0
         for producto in data["productos"]:

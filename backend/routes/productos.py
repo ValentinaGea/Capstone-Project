@@ -1,6 +1,7 @@
 # backend/routes/productos.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
+import psycopg2.extras
 
 productos_bp = Blueprint("productos", __name__, url_prefix="/api/productos")
 
@@ -9,7 +10,7 @@ productos_bp = Blueprint("productos", __name__, url_prefix="/api/productos")
 def get_productos():
     try:
         conn = get_db_connection()
-        cur = conn.cursor(dictionary=True)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("SELECT * FROM productos ORDER BY id ASC")
         productos = cur.fetchall()
         cur.close()
@@ -28,13 +29,13 @@ def crear_producto():
             return jsonify({"success": False, "message": "Nombre y precio son obligatorios"}), 400
 
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
         cur.execute(
-            "INSERT INTO productos (nombre, descripcion, precio, categoria, stock) VALUES (%s,%s,%s,%s,%s)",
+            "INSERT INTO productos (nombre, descripcion, precio, categoria, stock) VALUES (%s,%s,%s,%s,%s) RETURNING id",
             (data["nombre"], data.get("descripcion", ""), data["precio"], data.get("categoria", "General"), data.get("stock", 0))
         )
-        producto_id = cur.lastrowid
+        producto_id = cur.fetchone()["id"]
         conn.commit()
 
         cur.close()
@@ -51,7 +52,7 @@ def actualizar_producto(producto_id):
     try:
         data = request.get_json()
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
         cur.execute(
             "UPDATE productos SET nombre=%s, descripcion=%s, precio=%s, categoria=%s, stock=%s WHERE id=%s",
@@ -74,7 +75,7 @@ def actualizar_producto(producto_id):
 def eliminar_producto(producto_id):
     try:
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("DELETE FROM productos WHERE id=%s", (producto_id,))
         conn.commit()
 
