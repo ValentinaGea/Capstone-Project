@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const API_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/api"
-    : "https://coffee-manager-6ghx.onrender.com";
+// Definimos la URL de la API según entorno
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 // Auth
 export const loginUser = (username, password) =>
