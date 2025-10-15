@@ -9,13 +9,26 @@ from routes.productos import productos_bp
 from routes.pedidos import pedidos_bp
 from routes.estadisticas import estadisticas_bp
 
+@app.route("/api/debug/env")
+def debug_env():
+    import os
+    from flask import jsonify
+
+    return jsonify({
+        "DB_HOST": os.environ.get("DB_HOST"),
+        "DB_NAME": os.environ.get("DB_NAME"),
+        "DB_USER": os.environ.get("DB_USER"),
+        "DB_PORT": os.environ.get("DB_PORT"),
+        "DEBUG": os.environ.get("DEBUG")
+    })
+
 app = Flask(__name__)
 
 # ================= CORS =================
 # Permitir acceso a todos los orígenes
 CORS(app, origins=[
     "http://localhost:3000", 
-    "https://capstone-project-gules-chi.vercel.app/login",
+    "https://capstone-project-gules-chi.vercel.app",
     "https://coffee-manager-6ghx.onrender.com"])
 
 # ================= REGISTRO DE BLUEPRINTS =================
