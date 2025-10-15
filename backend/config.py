@@ -8,4 +8,4 @@ DB_CONFIG = {
     "port": int(os.environ.get("DB_PORT", 5432))
 }
 
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = os.environ.get("FLASK_ENV", "production") != "production"
