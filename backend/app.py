@@ -1,5 +1,5 @@
 # backend/app.py
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, jsonify
 from flask_cors import CORS
 from datetime import datetime
 
@@ -9,14 +9,16 @@ from routes.productos import productos_bp
 from routes.pedidos import pedidos_bp
 from routes.estadisticas import estadisticas_bp
 
-
 app = Flask(__name__)
 
+# ================= CORS =================
+# Permite tu frontend en Vercel
+CORS(app, resources={r"/*": {"origins": "https://capstone-project-gules-chi.vercel.app"}}, supports_credentials=True)
+
+# ================= RUTA DE DEBUG =================
 @app.route("/api/debug/env")
 def debug_env():
     import os
-    from flask import jsonify
-
     return jsonify({
         "DB_HOST": os.environ.get("DB_HOST"),
         "DB_NAME": os.environ.get("DB_NAME"),
@@ -25,12 +27,7 @@ def debug_env():
         "DEBUG": os.environ.get("DEBUG")
     })
 
-
-# ================= CORS =================
-
-CORS(app, resources={r"/*": {"origins": "https://capstone-project-gules-chi.vercel.app"}})
-
-# ================= REGISTRO DE BLUEPRINTS =================
+# ================= BLUEPRINTS =================
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(productos_bp, url_prefix="/api/productos")
 app.register_blueprint(pedidos_bp, url_prefix="/api/pedidos")
@@ -80,6 +77,11 @@ def index():
                         <li>GET /api/estadisticas/productos-populares</li>
                         <li>GET /api/estadisticas/ventas-categoria</li>
                         <li>GET /api/estadisticas/dashboard</li>
+                    </ul>
+                </li>
+                <li><b>Debug</b>
+                    <ul>
+                        <li>GET /api/debug/env</li>
                     </ul>
                 </li>
             </ul>
