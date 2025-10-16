@@ -28,9 +28,7 @@ def debug_env():
 
 # ================= CORS =================
 
-CORS(app, origins=[
-    "http://localhost:3000", 
-    "https://capstone-project-m2qz5vp8b-valentinas-projects-05658f6c.vercel.app"])
+CORS(app, resources={r"/*": {"origins": "https://capstone-project-gules-chi.vercel.app"}})
 
 # ================= REGISTRO DE BLUEPRINTS =================
 app.register_blueprint(auth_bp, url_prefix="/api/auth")

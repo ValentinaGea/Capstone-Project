@@ -13,7 +13,7 @@ if not DB_URL:
 def get_db_connection():
     url = urlparse(DB_URL)
     conn = psycopg2.connect(
-        dbname=url.path[1:],  # Quita la barra inicial
+        dbname=url.path[1:],
         user=url.username,
         password=url.password,
         host=url.hostname,
