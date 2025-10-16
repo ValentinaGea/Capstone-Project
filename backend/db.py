@@ -1,13 +1,8 @@
-from config import DB_CONFIG
-import psycopg2
+from config import get_db_connection
 
-def get_db_connection():
-    """Devuelve una conexión a la base de datos PostgreSQL usando DB_CONFIG"""
-    conn = psycopg2.connect(
-        host=DB_CONFIG["host"],
-        user=DB_CONFIG["user"],
-        password=DB_CONFIG["password"],
-        dbname=DB_CONFIG["database"],
-        port=DB_CONFIG["port"]
-    )
-    return conn
+def get_connection():
+    """
+    Devuelve una conexión a la base de datos PostgreSQL.
+    Utiliza la función get_db_connection definida en config.py
+    """
+    return get_db_connection()
