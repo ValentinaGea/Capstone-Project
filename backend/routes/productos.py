@@ -1,11 +1,10 @@
-# backend/routes/productos.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
 import psycopg2.extras
 
 productos_bp = Blueprint("productos", __name__, url_prefix="/api/productos")
 
-# ================= LISTAR PRODUCTOS =================
+# === LISTAR PRODUCTOS ===
 @productos_bp.route("/", methods=["GET"])
 def get_productos():
     try:
@@ -20,7 +19,7 @@ def get_productos():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= CREAR PRODUCTO =================
+# === CREAR PRODUCTO ===
 @productos_bp.route("/", methods=["POST"])
 def crear_producto():
     try:
@@ -48,7 +47,7 @@ def crear_producto():
         return jsonify({"success": False, "message": str(e), "trace": traceback.format_exc()}), 500
 
 
-# ================= ACTUALIZAR PRODUCTO =================
+# === ACTUALIZAR PRODUCTO ===
 @productos_bp.route("/<int:producto_id>", methods=["PUT"])
 def actualizar_producto(producto_id):
     try:
@@ -72,7 +71,7 @@ def actualizar_producto(producto_id):
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= ELIMINAR PRODUCTO =================
+# === ELIMINAR PRODUCTO ===
 @productos_bp.route("/<int:producto_id>", methods=["DELETE"])
 def eliminar_producto(producto_id):
     try:

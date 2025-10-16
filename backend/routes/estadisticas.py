@@ -1,11 +1,10 @@
-# backend/routes/estadisticas.py
 from flask import Blueprint, jsonify
 from db import get_db_connection
 import psycopg2.extras
 
 estadisticas_bp = Blueprint("estadisticas", __name__, url_prefix="/api/estadisticas")
 
-# ================= VENTAS DIARIAS =================
+# === VENTAS DIARIAS ===
 @estadisticas_bp.route("/ventas-diarias", methods=["GET"])
 def get_ventas_diarias():
     try:
@@ -29,7 +28,7 @@ def get_ventas_diarias():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# ================= PRODUCTOS POPULARES =================
+# === PRODUCTOS POPULARES ===
 @estadisticas_bp.route("/productos-populares", methods=["GET"])
 def get_productos_populares():
     try:
@@ -56,7 +55,7 @@ def get_productos_populares():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# ================= VENTAS POR CATEGORÍA =================
+# === VENTAS POR CATEGORÍA ===
 @estadisticas_bp.route("/ventas-categoria", methods=["GET"])
 def get_ventas_categoria():
     try:
@@ -81,7 +80,7 @@ def get_ventas_categoria():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# ================= RESUMEN GENERAL =================
+# === RESUMEN GENERAL ===
 @estadisticas_bp.route("/dashboard", methods=["GET"])
 def get_dashboard():
     try:

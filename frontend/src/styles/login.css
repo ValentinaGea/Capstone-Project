@@ -1,12 +1,9 @@
-/* src/styles/login.css */
-
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-/* Fondo solo en la página de login */
 .login-background {
   background-image: url("../image/cafe-ecologico.webp");
   background-size: cover;
@@ -40,7 +37,7 @@ html, body {
 .login_card h1 {
   margin-bottom: 20px;
   font-size: 1.8rem;
-  color: #3e2c1c; /* marrón café */
+  color: #3e2c1c;
 }
 
 .login_card form label {
@@ -63,7 +60,7 @@ html, body {
   padding: 10px;
   border-radius: 6px;
   border: none;
-  background-color: #6f4e37; /* marrón café oscuro */
+  background-color: #6f4e37;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;

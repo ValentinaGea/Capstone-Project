@@ -51,7 +51,7 @@ function AppContent() {
     return children;
   };
 
-  // 👉 Detectar si estamos en la página de login
+  // Detectar si estamos en la página de login
   const isLoginPage = location.pathname === "/login";
 
   return (

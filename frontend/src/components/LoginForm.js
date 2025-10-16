@@ -60,7 +60,7 @@ const LoginForm = ({ onLogin }) => {
             autoComplete="current-password"
           />
         </div>
-        <button type="submit">Ingresar</button>
+        <button type="submit">Iniciar sesión</button>
       </form>
     </div>
   );

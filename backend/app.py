@@ -1,9 +1,8 @@
-# backend/app.py
 from flask import Flask, render_template_string, jsonify
 from flask_cors import CORS
 from datetime import datetime
 
-# Importar los blueprints
+# === Importar los blueprints ===
 from routes.auth import auth_bp
 from routes.productos import productos_bp
 from routes.pedidos import pedidos_bp
@@ -11,11 +10,11 @@ from routes.estadisticas import estadisticas_bp
 
 app = Flask(__name__)
 
-# ================= CORS =================
+# === CORS ===
 # Permite tu frontend en Vercel
 CORS(app, resources={r"/*": {"origins": "https://capstone-project-gules-chi.vercel.app"}}, supports_credentials=True)
 
-# ================= RUTA DE DEBUG =================
+# === RUTA DE DEBUG ====
 @app.route("/api/debug/env")
 def debug_env():
     import os
@@ -27,13 +26,13 @@ def debug_env():
         "DEBUG": os.environ.get("DEBUG")
     })
 
-# ================= BLUEPRINTS =================
+# === BLUEPRINTS ===
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(productos_bp, url_prefix="/api/productos")
 app.register_blueprint(pedidos_bp, url_prefix="/api/pedidos")
 app.register_blueprint(estadisticas_bp, url_prefix="/api/estadisticas")
 
-# ================= RUTA DE PRUEBA =================
+# === RUTA DE PRUEBA ===
 @app.route("/")
 def index():
     return render_template_string(f"""
@@ -89,6 +88,6 @@ def index():
         </html>
     """)
 
-# ================= MAIN =================
+# === MAIN ===
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

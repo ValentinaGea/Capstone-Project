@@ -1,11 +1,10 @@
-# backend/routes/pedidos.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
 import psycopg2.extras
 
 pedidos_bp = Blueprint("pedidos", __name__, url_prefix="/api/pedidos")
 
-# ================= LISTAR PEDIDOS =================
+# === LISTAR PEDIDOS ===
 @pedidos_bp.route("/", methods=["GET"])
 def get_pedidos():
     """Obtener todos los pedidos con sus detalles"""
@@ -33,7 +32,7 @@ def get_pedidos():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= CREAR PEDIDO =================
+# === CREAR PEDIDO ===
 @pedidos_bp.route("/", methods=["POST"])
 def crear_pedido():
     """Crear un nuevo pedido con sus productos"""
@@ -77,12 +76,12 @@ def crear_pedido():
         cur.close()
         conn.close()
 
-        return jsonify({"success": True, "message": "Pedido creado exitosamente", "id": pedido_id, "total": total_pedido}), 201
+        return jsonify({"success": True, "message": "Pedido creado ", "id": pedido_id, "total": total_pedido}), 201
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= ACTUALIZAR ESTADO =================
+# === ACTUALIZAR ESTADO ===
 @pedidos_bp.route("/<int:pedido_id>/estado", methods=["PUT"])
 def actualizar_estado_pedido(pedido_id):
     """Actualizar el estado de un pedido"""
@@ -103,6 +102,6 @@ def actualizar_estado_pedido(pedido_id):
 
         cur.close()
         conn.close()
-        return jsonify({"success": True, "message": "Estado actualizado exitosamente"})
+        return jsonify({"success": True, "message": "Estado actualizado "})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500

@@ -1,7 +1,6 @@
-/* Sidebar general */
 .sidebar {
   position: fixed;
-  top: 60px; /* debajo del navbar */
+  top: 60px;
   left: 0;
   width: 200px;
   height: calc(100% - 60px);
@@ -48,7 +47,7 @@
 /* Fondo oscuro detrás del sidebar en móvil */
 .sidebar-overlay {
   position: fixed;
-  top: 60px; /* debajo del navbar */
+  top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -56,7 +55,6 @@
   z-index: 950;
 }
 
-/* === Responsive === */
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-110%);

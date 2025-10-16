@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 import psycopg2
 from dotenv import load_dotenv
 
-# Carga variables de .env
+# Cargar variables de .env
 load_dotenv()
 
 DB_URL = os.environ.get("DATABASE_URL")

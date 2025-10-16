@@ -10,7 +10,7 @@
   justify-content: space-between;
   padding: 0 16px;
   color: white;
-  z-index: 1100; /* encima del sidebar */
+  z-index: 1100;
   box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@
   border: none;
   color: white;
   cursor: pointer;
-  display: none; /* oculto en escritorio */
+  display: none;
 }
 
 /* Contenedor derecho */
@@ -53,7 +53,7 @@
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .menu-btn {
-    display: block; /* mostrar el botón en móvil */
+    display: block;
   }
 
   .navbar {

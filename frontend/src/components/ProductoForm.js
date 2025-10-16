@@ -58,7 +58,7 @@ const ProductoForm = ({ producto, onSuccess, onCancel }) => {
 
       if (response.data.success) {
         onSuccess();
-        limpiarFormulario(); // limpiamos el formulario al guardar
+        limpiarFormulario(); // limpiamos el form al guardar
       } else {
         setError(response.data.message || "Error al guardar producto");
       }

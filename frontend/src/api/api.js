@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Solo la URL base del backend (sin /api)
+// Solo la URL base del backend
 const API_URL = process.env.REACT_APP_API_URL;
 
 // Auth

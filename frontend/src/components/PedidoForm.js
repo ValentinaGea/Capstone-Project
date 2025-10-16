@@ -77,7 +77,7 @@ const PedidoForm = ({ onSuccess }) => {
         alert("Pedido creado exitosamente ✅");
         setClienteNombre("");
         setProductosSeleccionados([]);
-        setProductoActual(""); // <-- Limpiar el select después de crear pedido
+        setProductoActual(""); // <-- Limpiar el form después de crear pedido
         if (onSuccess) onSuccess();
       } else {
         setError(response.data.message || "Error al crear pedido");

@@ -1,9 +1,6 @@
-/* src/styles/tables.css */
-
-/* wrapper */
 .table-responsive {
   width: 100%;
-  overflow-x: hidden; /* No desplazamiento lateral de la página */
+  overflow-x: hidden;
 }
 
 /* tabla base (desktop) */

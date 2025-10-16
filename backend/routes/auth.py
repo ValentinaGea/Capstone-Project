@@ -1,11 +1,10 @@
-# backend/routes/auth.py
 from flask import Blueprint, request, jsonify
 from db import get_db_connection
-import psycopg2.extras  # necesario para RealDictCursor
+import psycopg2.extras
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
-# ================= LOGIN =================
+# === LOGIN ===
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -37,7 +36,7 @@ def login():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= CREAR USUARIO =================
+# === CREAR USUARIO ===
 @auth_bp.route("/usuarios", methods=["POST"])
 def crear_usuario():
     data = request.get_json()
@@ -66,7 +65,7 @@ def crear_usuario():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= LISTAR USUARIOS =================
+# === LISTAR USUARIOS ===
 @auth_bp.route("/usuarios", methods=["GET"])
 def listar_usuarios():
     try:
@@ -81,7 +80,7 @@ def listar_usuarios():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
-# ================= ELIMINAR USUARIO =================
+# === ELIMINAR USUARIO ===
 @auth_bp.route("/usuarios/<int:user_id>", methods=["DELETE"])
 def eliminar_usuario(user_id):
     requester = request.args.get("requester", "")
