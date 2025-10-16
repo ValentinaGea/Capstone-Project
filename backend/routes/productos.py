@@ -43,7 +43,9 @@ def crear_producto():
 
         return jsonify({"success": True, "message": "Producto creado", "id": producto_id}), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        import traceback
+        print(traceback.format_exc())  # <-- log en Render
+        return jsonify({"success": False, "message": str(e), "trace": traceback.format_exc()}), 500
 
 
 # ================= ACTUALIZAR PRODUCTO =================
